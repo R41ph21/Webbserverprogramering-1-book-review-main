@@ -8,8 +8,12 @@
 const form = document.querySelector(".review-form");
 const submitBtn = document.querySelector("button[type='submit']");
 
-// ========================================
-// KONSTANTER
+// =======================================
+let bookTitle = form.elements.bookTitle.value;
+let author = form.elements.author.value;
+let reviewer = form.elements.reviewer.value;
+let rating = form.elements.rating.value;
+let review = form.elements.review.value;
 // ========================================
 const API_URL = "http://localhost:3000/reviews";
 
@@ -120,6 +124,9 @@ form.addEventListener("input", checkInputs);
 form.addEventListener("submit", async (e) => {
   e.preventDefault();
 
+  if (!bookTitle || !author || !reviewer || !rating || !review) return
+  alert("Fyll i alla fält!")
+  
   // TODO: Hämta alla värden från formuläret
   // TODO: Skapa ett reviewData-objekt
   // TODO: Skicka POST-request till backend
