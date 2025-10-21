@@ -1,5 +1,6 @@
 // ========================================
 // IMPORTS
+import axios from "axios";
 // ========================================
 
 // ========================================
@@ -9,7 +10,7 @@ const form = document.querySelector(".review-form");
 const submitBtn = document.querySelector("button[type='submit']");
 
 // =======================================
-let bookTitle = form.elements.bookTitle.value;
+let bookTitle = form.elements.bookTitle.value;  //läser in det som skrivs i namn inputfältet
 let author = form.elements.author.value;
 let reviewer = form.elements.reviewer.value;
 let rating = form.elements.rating.value;
@@ -127,11 +128,28 @@ form.addEventListener("submit", async (e) => {
   if (!bookTitle || !author || !reviewer || !rating || !review) return
   alert("Fyll i alla fält!")
   
-  // TODO: Hämta alla värden från formuläret
-  // TODO: Skapa ett reviewData-objekt
-  // TODO: Skicka POST-request till backend
-  // TODO: Om det lyckas: visa meddelande, rensa formuläret, ladda om recensioner
-  // TODO: Hantera fel
+  const reviewData = {
+    bookTitle,
+    author,
+    reviewer,
+    rating,
+    review,
+  };
+  
+  try {
+    const response = await axios.post("http://localhost:3000/reviews", reviewData);
+
+    if (response.status === 201) {
+      alert("Recension erstellt!");
+      form.reset();
+      loadReviews();
+    } else {
+      alert("Ein Fehler ist aufgetreten.");
+    }
+  } catch (error) {
+    console.error("Fehler:", error);
+    alert("Ein Fehler ist aufgetreten.");
+  }
 });
 
 /**
