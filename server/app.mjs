@@ -15,21 +15,42 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
 const filerPath = `${__dirname}/reviews.json`;
-const data = fs.readFileSync(filerPath, "utf-8");
+
 
 const saveReview = () => {
   let reviews = []
 
   if (fs.existsSync(filerPath)) {
-    reviews = JSON.parse(data);
+    try {
+      const data = fs.readFileSync(filerPath, "utf-8"); //Läser filens innehåll som text 
+      reviews = JSON.parse(data)    //Gör om texten till JavaScript-format (oftast en array)
+
+      // Om filen inte innnehåller en array, skapa en tom array
+      if(!Array.isArray(reviews)) reviews = []; //Om det inte är en array, skapa en tom array
+    } catch (error) {
+      // Om JSON är tråsigt eller något går fel -> nollställ reviews
+      console.error("Error during read of reviews.json:", error)
+      reviews = [];
+    }
+    
   }
 
   reviews.push(reviewData);
 
-  fs.writeFileSync(filerPath, JSON.stringify(reviews, null, 2));
+  try {
+    console.log({reviews: reviews});
+
+    // Spara tillbaka alla recensioner till reviews.json
+    fs.writeFileSync(filerPath, JSON.stringify(reviews, null, 2));
+  } catch (error) {
+    // Skriv ut error medelande om något går fel vid skrivning
+    console.error("Error writing to reviews.json:")
+  }
+
+ 
 };
 
-app.post ("/reviews", (req, res) => {
+app.post ("/save-reviews", (req, res) => {
   const { bookTitle, author, reviewer, rating, review } = req.body;
   console.log("Recension mottagen:", req.body);
 
