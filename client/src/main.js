@@ -147,8 +147,10 @@ let reviewer = form.elements.reviewer.value;
 let rating = form.elements.rating.value;
 let review = form.elements.review.value;
 
-  if (!bookTitle || !author || !reviewer || !rating || !review) return
-  alert("Fyll i alla fält!")
+  if (!bookTitle || !author || !reviewer || !rating || !review) {
+  alert("Fyll i alla fält!");
+  return
+}
   
   const reviewData = {
     bookTitle,
@@ -159,7 +161,7 @@ let review = form.elements.review.value;
   };
   
   try {
-    const response = await axios.post("http://localhost:3000/reviews", reviewData);
+    const response = await axios.post("http://localhost:3000/save-reviews", reviewData);
 
     if (response.status === 201) {
       alert("Recension erstellt!");
