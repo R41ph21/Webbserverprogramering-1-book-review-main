@@ -4,6 +4,7 @@ import { v4 as uuidv4 } from "uuid";
 import fs from "fs";
 import { dirname } from "path";
 import { fileURLToPath } from "url";
+import { get } from "http";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
@@ -14,15 +15,29 @@ app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
-const filerPath = `${__dirname}/reviews.json`;
+const filePath = `${__dirname}/reviews.json`;
 
+const getReviews = () => {
+
+  const data = fs.readFileSync(filePath, "utf-8"); //Läser filens innehåll som text 
+
+  try {
+    if (fs.existsSync(filePath)) return JSON.parse(data);
+
+    return [];
+  } catch (error) {
+    console.error("Error reading reviews:", error);
+    
+    return [];
+  }
+}
 
 const saveReview = (reviewData) => {
   let reviews = []
 
-  if (fs.existsSync(filerPath)) {
+  if (fs.existsSync(filePath)) {
     try {
-      const data = fs.readFileSync(filerPath, "utf-8"); //Läser filens innehåll som text 
+      const data = fs.readFileSync(filePath, "utf-8"); //Läser filens innehåll som text 
       reviews = JSON.parse(data)    //Gör om texten till JavaScript-format (oftast en array)
 
       // Om filen inte innnehåller en array, skapa en tom array
@@ -41,7 +56,7 @@ const saveReview = (reviewData) => {
     console.log({reviews: reviews});
 
     // Spara tillbaka alla recensioner till reviews.json
-    fs.writeFileSync(filerPath, JSON.stringify(reviews, null, 2));
+    fs.writeFileSync(filePath, JSON.stringify(reviews, null, 2));
   } catch (error) {
     // Skriv ut error medelande om något går fel vid skrivning
     console.error("Error writing to reviews.json:")
@@ -49,6 +64,19 @@ const saveReview = (reviewData) => {
 
  
 };
+
+app.get("/reviews", (req,res) => {
+
+  try {
+    const reviews = getReviews();
+
+    res.status(200).json({success: true, data: reviews})
+  } catch (error) {
+    console.error("Error reading file:", error)
+
+    res.status(500).jsom({success: false})
+  }
+})
 
 app.post ("/save-reviews", (req, res) => {
   const { bookTitle, author, reviewer, rating, review } = req.body;

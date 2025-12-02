@@ -12,7 +12,7 @@ const submitBtn = document.querySelector("button[type='submit']");
 // =======================================
 
 // ========================================
-const API_URL = "http://localhost:3000/";
+const API_URL = "http://localhost:3000";
 
 // ========================================
 // HJÄLPFUNKTIONER
@@ -113,7 +113,7 @@ const handleDelete = async (e) => {
  */
 const loadReviews = async () => {
   try {
-    const response = await axios.get(`${API_URL}reviews`)
+    const response = await axios.get(`${API_URL}/reviews`)
 
     console.log({response: response.data.data})
 

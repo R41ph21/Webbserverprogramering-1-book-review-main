@@ -1,20 +1,11 @@
 [
   {
-    "bookTitle": "asdf",
-    "author": "asf",
-    "reviewer": "afs",
+    "bookTitle": "Frankenstein",
+    "author": "Mary Shelly",
+    "reviewer": "Ralph",
     "rating": "4",
-    "review": "fd",
-    "id": "dc4d9269-5834-44a3-b499-f381bb1743a9",
-    "timestamp": "2025-12-02T12:08:12.972Z"
-  },
-  {
-    "bookTitle": "adf",
-    "author": "fsd",
-    "reviewer": "asdf",
-    "rating": "4",
-    "review": "sfd",
-    "id": "08dc8e0d-bd30-4d67-9b47-ef3bef6f277f",
-    "timestamp": "2025-12-02T12:08:26.382Z"
+    "review": "Ok",
+    "id": "fbe6bf5a-deea-4af7-b17a-55db161075a9",
+    "timestamp": "2025-12-02T12:46:40.296Z"
   }
 ]
