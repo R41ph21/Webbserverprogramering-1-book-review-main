@@ -7,5 +7,14 @@
     "review": "Ok",
     "id": "fbe6bf5a-deea-4af7-b17a-55db161075a9",
     "timestamp": "2025-12-02T12:46:40.296Z"
+  },
+  {
+    "bookTitle": "Baum",
+    "author": "Hans Wurst",
+    "reviewer": "Ralph",
+    "rating": "1",
+    "review": "k",
+    "id": "946a2907-2b4c-4a6c-b564-4589dcabe7d7",
+    "timestamp": "2025-12-08T08:37:15.277Z"
   }
 ]
